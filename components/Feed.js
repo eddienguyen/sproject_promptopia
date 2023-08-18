@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PromptCard from "./PromptCard";
 import API_ROUTES from "@constants/api_routes";
-import { debounce } from "@plugins/helpers/helpers";
+import { debounceMore } from "@plugins/helpers/helpers";
 import { useSearchParams } from "next/navigation";
+import * as _ from "lodash";
 
 const List = ({ data = [], onTagClick = null }) => {
   return (
@@ -17,6 +18,7 @@ const List = ({ data = [], onTagClick = null }) => {
 };
 
 const Feed = () => {
+  const timerRef = useRef(null); // we can save timer in useRef and pass it to child
   const searchParams = useSearchParams();
   const key = searchParams.get("key");
 
@@ -38,6 +40,16 @@ const Feed = () => {
     submitSearch(value);
   };
 
+  const debounce = (callback, delay = 1000) => {
+    return function () {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(
+        () => callback.apply(this, arguments),
+        delay
+      );
+    };
+  };
+
   const fetchPosts = async (queryString = "") => {
     let queries = {};
     if (queryString && queryString.trim()) {
@@ -52,7 +64,9 @@ const Feed = () => {
     setIsFetching(false);
   };
 
-  const submitSearch = debounce(1000, fetchPosts);
+  const submitSearch = debounce((ee) => {
+    fetchPosts(ee);
+  }, 1000);
 
   useEffect(() => {
     // console.log("searchParams", searchParams);

@@ -1,4 +1,4 @@
-export const debounce = (delay = 1000, callback) => {
+export const debounce = (callback, delay = 1000) => {
   let timerId;
   return function () {
     clearTimeout(timerId);

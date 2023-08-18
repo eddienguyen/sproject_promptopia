@@ -2,6 +2,8 @@
 
 Tutorials and all from [Youtube](https://youtu.be/wm5gMKuwSYk)
 
+This project is deployed on [Vercel](promptopia-ten-chi.vercel.app)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
