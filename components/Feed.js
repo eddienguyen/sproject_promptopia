@@ -5,7 +5,6 @@ import PromptCard from "./PromptCard";
 import API_ROUTES from "@constants/api_routes";
 import { debounceMore } from "@plugins/helpers/helpers";
 import { useSearchParams } from "next/navigation";
-import * as _ from "lodash";
 
 const List = ({ data = [], onTagClick = null }) => {
   return (
@@ -76,7 +75,7 @@ const Feed = () => {
     } else {
       fetchPosts();
     }
-    setSearchText(key);
+    setSearchText(key || "");
 
     return () => {};
   }, [JSON.stringify(key)]);
